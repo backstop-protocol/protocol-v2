@@ -21,9 +21,7 @@ export const NETWORKS_RPC_URL: iParamsPerNetwork<string> = {
   [eEthereumNetwork.ropsten]: ALCHEMY_KEY
     ? `https://eth-ropsten.alchemyapi.io/v2/${ALCHEMY_KEY}`
     : `https://ropsten.infura.io/v3/${INFURA_KEY}`,
-  [eEthereumNetwork.main]: ALCHEMY_KEY
-    ? `https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_KEY}`
-    : `https://mainnet.infura.io/v3/${INFURA_KEY}`,
+  [eEthereumNetwork.main]: 'http://localhost:8545',
   [eEthereumNetwork.coverage]: 'http://localhost:8555',
   [eEthereumNetwork.hardhat]: 'http://localhost:8545',
   [eEthereumNetwork.buidlerevm]: 'http://localhost:8545',

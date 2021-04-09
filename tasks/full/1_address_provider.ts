@@ -29,6 +29,7 @@ task(
   .addFlag('verify', 'Verify contracts at Etherscan')
   .addParam('pool', `Pool name to retrieve configuration, supported: ${Object.values(ConfigNames)}`)
   .setAction(async ({ verify, pool }, DRE) => {
+    console.log('2...');
     await DRE.run('set-DRE');
     let signer: Signer;
     const network = <eNetwork>DRE.network.name;
@@ -37,7 +38,7 @@ task(
 
     const providerRegistryAddress = getParamPerNetwork(poolConfig.ProviderRegistry, network);
     const providerRegistryOwner = getParamPerNetwork(poolConfig.ProviderRegistryOwner, network);
-
+    console.log('2.1 ...');
     if (
       !providerRegistryAddress ||
       !isAddress(providerRegistryAddress) ||
@@ -53,7 +54,7 @@ task(
     ) {
       throw Error('config.ProviderRegistryOwner is missing or is not an address.');
     }
-
+    console.log('2.2 ...');
     // Checks if deployer address is registry owner
     if (process.env.MAINNET_FORK === 'true') {
       await DRE.network.provider.request({
@@ -72,10 +73,10 @@ task(
     ).connect(signer);
 
     console.log('Registry Address', addressesProviderRegistry.address);
-
+    console.log('2.3 ...');
     // 2. Deploy address provider and set genesis manager
     const addressesProvider = await deployLendingPoolAddressesProvider(MarketId, verify);
-
+    console.log('2.3.1 ...');
     // DISABLE SEC. 3 FOR GOVERNANCE USE!
     // 3. Set the provider at the Registry
     await waitForTx(
@@ -84,7 +85,7 @@ task(
         ProviderId
       )
     );
-
+    console.log('2.4 ...');
     // 4. Set pool admins
 
     await waitForTx(await addressesProvider.setPoolAdmin(await getGenesisPoolAdmin(poolConfig)));
@@ -92,4 +93,5 @@ task(
 
     console.log('Pool Admin', await addressesProvider.getPoolAdmin());
     console.log('Emergency Admin', await addressesProvider.getEmergencyAdmin());
+    console.log('2.5 ...');
   });

@@ -8,4 +8,5 @@ task('full:deploy-address-provider-registry', 'Deploy address provider registry'
 
     const contract = await deployLendingPoolAddressesProviderRegistry(verify);
     console.log('Registry Address:', contract.address);
+    console.log('1...');
   });
