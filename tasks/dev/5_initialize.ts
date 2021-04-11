@@ -32,6 +32,7 @@ task('dev:initialize-lending-pool', 'Initialize lending pool configuration.')
   .addFlag('verify', 'Verify contracts at Etherscan')
   .addParam('pool', `Pool name to retrieve configuration, supported: ${Object.values(ConfigNames)}`)
   .setAction(async ({ verify, pool }, localBRE) => {
+    console.log('1 ..');
     await localBRE.run('set-DRE');
     const network = <eNetwork>localBRE.network.name;
     const poolConfig = loadPoolConfig(pool);
@@ -58,7 +59,7 @@ task('dev:initialize-lending-pool', 'Initialize lending pool configuration.')
     const admin = await addressesProvider.getPoolAdmin();
 
     const treasuryAddress = await getTreasuryAddress(poolConfig);
-
+    console.log('2 ..');
     await initReservesByHelper(
       reservesParams,
       protoPoolReservesAddresses,
@@ -86,12 +87,18 @@ task('dev:initialize-lending-pool', 'Initialize lending pool configuration.')
       eContractid.MockFlashLoanReceiver,
       mockFlashLoanReceiver.address
     );
-
+    console.log('3 ..');
     await deployWalletBalancerProvider(verify);
 
+    console.log('3.1 ..');
     await insertContractAddressInDb(eContractid.AaveProtocolDataProvider, testHelpers.address);
 
+    console.log('3.2 ..');
     const lendingPoolAddress = await addressesProvider.getLendingPool();
+    console.log('3.3 ..');
     const gateWay = await getParamPerNetwork(WethGateway, network);
+    console.log('3.4 .. [' + gateWay + ']');
     await authorizeWETHGateway(gateWay, lendingPoolAddress);
+
+    console.log('4 ..');
   });

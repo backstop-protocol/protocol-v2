@@ -500,10 +500,16 @@ export const deployWETHGateway = async (args: [tEthereumAddress], verify?: boole
 export const authorizeWETHGateway = async (
   wethGateWay: tEthereumAddress,
   lendingPool: tEthereumAddress
-) =>
+) => {
+  console.log('5.1');
+  if (wethGateWay === '') return;
+  console.log('5.2');
+  console.log('wethGateWay' + wethGateWay);
   await new WETHGatewayFactory(await getFirstSigner())
     .attach(wethGateWay)
     .authorizeLendingPool(lendingPool);
+  console.log('5.3');
+};
 
 export const deployMockStableDebtToken = async (
   args: [tEthereumAddress, tEthereumAddress, tEthereumAddress, string, string, string],
@@ -546,7 +552,15 @@ export const deployMockVariableDebtToken = async (
 };
 
 export const deployMockAToken = async (
-  args: [tEthereumAddress, tEthereumAddress, tEthereumAddress, tEthereumAddress, string, string, string],
+  args: [
+    tEthereumAddress,
+    tEthereumAddress,
+    tEthereumAddress,
+    tEthereumAddress,
+    string,
+    string,
+    string
+  ],
   verify?: boolean
 ) => {
   const instance = await withSaveAndVerify(
