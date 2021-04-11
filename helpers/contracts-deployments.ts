@@ -502,7 +502,7 @@ export const authorizeWETHGateway = async (
   lendingPool: tEthereumAddress
 ) => {
   console.log('5.1');
-  if (wethGateWay === '') return;
+  if (wethGateWay === '' || wethGateWay == undefined) return;
   console.log('5.2');
   console.log('wethGateWay' + wethGateWay);
   await new WETHGatewayFactory(await getFirstSigner())

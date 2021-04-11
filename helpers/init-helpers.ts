@@ -200,7 +200,7 @@ export const initReservesByHelper = async (
       underlyingAssetDecimals: reserveInitDecimals[i],
       interestRateStrategyAddress: strategyAddressPerAsset[reserveSymbols[i]],
       underlyingAsset: reserveTokens[i],
-      treasury: treasuryAddress,
+      treasury: '0x464c71f6c2f760dda6093dcb91c24c39e5d6e18c', // <- hardcode- patch
       incentivesController: ZERO_ADDRESS,
       underlyingAssetName: reserveSymbols[i],
       aTokenName: `${aTokenNamePrefix} ${reserveSymbols[i]}`,
